@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:34:07 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/02 21:55:03 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/03 10:37:15 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,24 @@ void	sig_quit(int code);
 int		quote_check(t_mini *mini, char **line);
 char	*ft_strchr(const char *s, int c);
 int		is_sep(char *line, int i);
+void	ft_skip_space(const char *str, int *i);
+int		ignore_sep(char *line, int i);
+int		next_alloc(char *line, int *i);
+char	*space_line(char *line);
+t_token	*next_token(char *line, int *i);
+int		is_type(t_token *token, int type);
+int		is_types(t_token *token, char *types);
+void	squish_args(t_mini *mini);
+void	parse(t_mini *mini);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	*ft_memdel(void *ptr);
+char	*space_alloc(char *line);
+int		quotes(char *line, int index);
+t_token	*prev_sep(t_token *token, int skip);
+char	*ft_itoa(int n);
+char	*ft_strjoin(const char *s1, const char *s2);
+int			get_lvl(const char *str);
+
 
 #endif

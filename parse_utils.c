@@ -6,11 +6,25 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:40:29 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/02 21:41:59 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/03 09:49:25 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		ignore_sep(char *line, int i)
+{
+	if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == ';')
+		return (1);
+	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '|')
+		return (1);
+	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>')
+		return (1);
+	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>'
+				&& line[i + 2] && line[i + 2] == '>')
+		return (1);
+	return (0);
+}
 
 int		quotes(char *line, int index)
 {

@@ -6,15 +6,61 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:27:17 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/02 21:56:03 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/03 10:18:36 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
+void	type_arg(t_token *token, int separator)
+{
+	if (ft_strcmp(token->str, "") == 0)
+		token->type = EMPTY;
+	else if (ft_strcmp(token->str, ">") == 0 && separator == 0)
+		token->type = TRUNC;
+	else if (ft_strcmp(token->str, ">>") == 0 && separator == 0)
+		token->type = APPEND;
+	else if (ft_strcmp(token->str, "<") == 0 && separator == 0)
+		token->type = INPUT;
+	else if (ft_strcmp(token->str, "|") == 0 && separator == 0)
+		token->type = PIPE;
+	else if (ft_strcmp(token->str, ";") == 0 && separator == 0)
+		token->type = END;
+	else if (token->prev == NULL || token->prev->type >= TRUNC)
+		token->type = CMD;
+	else
+		token->type = ARG;
+}
 
-// get_tokens
-//squish_args is_type type_arg
+t_token	*get_tokens(char *line)
+{
+	t_token	*prev;
+	t_token	*next;
+	int		i;
+	int		sep;
+
+	prev = NULL;
+	next = NULL;
+	i = 0;
+	ft_skip_space(line, &i);
+	while (line[i])
+	{
+		sep = ignore_sep(line, i);
+		next = next_token(line, &i);
+		next->prev = prev;
+		if (prev)
+			prev->next = next;
+		prev = next;
+		type_arg(next, sep);
+		ft_skip_space(line, &i);
+	}
+	if (next)
+		next->next = NULL;
+	while (next && next->prev)
+		next = next->prev;
+	return (next);
+}
+
 void	parse(t_mini *mini)
 {
 	char	*line;

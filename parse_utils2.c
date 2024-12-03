@@ -6,11 +6,45 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:43:22 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/02 21:49:56 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/03 09:50:46 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
+
+int		next_alloc(char *line, int *i)
+{
+	int		count;
+	int		j;
+	char	c;
+
+	count = 0;
+	j = 0;
+	c = ' ';
+	while (line[*i + j] && (line[*i + j] != ' ' || c != ' '))
+	{
+		if (c == ' ' && (line[*i + j] == '\'' || line[*i + j] == '\"'))
+			c = line[*i + j++];
+		else if (c != ' ' && line[*i + j] == c)
+		{
+			count += 2;
+			c = ' ';
+			j++;
+		}
+		else
+			j++;
+		if (line[*i + j - 1] == '\\')
+			count--;
+	}
+	return (j - count + 1);
+}
+
+void	ft_skip_space(const char *str, int *i)
+{
+	while ((str[*i] == ' ' || str[*i] == '\t')
+	|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+		(*i)++;
+}
 
 char	*space_alloc(char *line)
 {

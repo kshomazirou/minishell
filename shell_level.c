@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:02:48 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/02 21:04:57 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/03 10:38:24 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	shell_level(t_env *env)
 		if (strcmp("SHLVL", env_name) == 0)
 		{
 			ft_memdel(env->value);
-			shlvl = itoa(shell_level);
-			env->value = strjoin("SHLVL=", shlvl);
+			shlvl = ft_itoa(shell_level);
+			env->value = ft_strjoin("SHLVL=", shlvl);
 			ft_memdel(shlvl);
 			return ;
 		}
