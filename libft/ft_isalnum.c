@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 21:38:06 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/16 20:41:26 by shoumakobay      ###   ########.fr       */
+/*   Created: 2024/12/04 21:07:27 by shoumakobay       #+#    #+#             */
+/*   Updated: 2024/12/04 21:51:51 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include "../minishell.h"
 
-void	sig_int(int code)
+int	ft_isalpha(int c)
 {
-	(void) code;
-
-	if (g_sig.pid == 0)
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 1;
-	}
-	else
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 130;
-	}
-	g_sig.sigint = 1;
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
 
-void	sig_quit(int code)
+int	ft_isdigit(int c)
 {
-	char	*nbr;
+	return (c >= '0' && c <= '9');
+}
 
-	nbr = ft_itoa(code);
-	if (g_sig.pid != 0)
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 131;
-		g_sig.sigquit = 1;
-	}
-	else
-		write(1, "", 1);
-	ft_memdel(nbr);
+int	ft_isalnum(int c)
+{
+	return (ft_isdigit(c) || ft_isalpha(c));
 }

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util3.c                                      :+:      :+:    :+:   */
+/*   parse_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:57:48 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:11:26 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/16 20:54:50 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
+//here is changing 
 
 t_token	*next_token(char *line, int *i)
 {
@@ -20,18 +21,16 @@ t_token	*next_token(char *line, int *i)
 
 	j = 0;
 	c = ' ';
-	if (!(token = ft_calloc(1, sizeof(t_token)))
-	|| !(token->str = ft_calloc(1, sizeof(char) * next_alloc(line, i))))
+	token = ft_calloc(1, sizeof(t_token));
+	token->str = ft_calloc(1, sizeof(char) * next_alloc(line, i));
+	if (!token || !token->str)
 		return (NULL);
 	while (line[*i] && (line[*i] != ' ' || c != ' '))
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
 			c = line[(*i)++];
-		else if (c != ' ' && line[*i] == c)
-		{
+		else if (c != ' ' && line[(*i)++] == c)
 			c = ' ';
-			(*i)++;
-		}
 		else if (line[*i] == '\\' && (*i)++)
 			token->str[j++] = line[(*i)++];
 		else
@@ -41,37 +40,7 @@ t_token	*next_token(char *line, int *i)
 	return (token);
 }
 
-char	*space_line(char *line)
-{
-	char	*new;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new = space_alloc(line);
-	while (new && line[i])
-	{
-		if (quotes(line, i) != 2 && line[i] == '$' && i && line[i - 1] != '\\')
-			new[j++] = (char)(-line[i++]);
-		else if (quotes(line, i) == 0 && is_sep(line, i))
-		{
-			new[j++] = ' ';
-			new[j++] = line[i++];
-			if (quotes(line, i) == 0 && line[i] == '>')
-				new[j++] = line[i++];
-			new[j++] = ' ';
-		}
-		else
-			new[j++] = line[i++];
-	}
-	new[j] = '\0';
-	ft_memdel(line);
-	return (new);
-}
-//prev_sep is_type is_types
-
-static int		is_last_valid_arg(t_token *token)
+static int	is_last_valid_arg(t_token *token)
 {
 	t_token	*prev;
 
@@ -85,6 +54,7 @@ static int		is_last_valid_arg(t_token *token)
 	else
 		return (0);
 }
+//here is changing 
 
 void	squish_args(t_mini *mini)
 {
@@ -99,15 +69,25 @@ void	squish_args(t_mini *mini)
 		{
 			while (is_last_valid_arg(prev) == 0)
 				prev = prev->prev;
-			token->prev->next = token->next;
+			if (token->prev)
+				token->prev->next = token->next;
 			if (token->next)
 				token->next->prev = token->prev;
 			token->prev = prev;
-			token->next = (prev) ? prev->next : mini->start;
-			prev = (prev) ? prev : token;
-			prev->next->prev = token;
-			prev->next = (mini->start->prev) ? prev->next : token;
-			mini->start = (mini->start->prev) ? mini->start->prev : mini->start;
+			if (prev)
+			{
+				token->next = prev->next;
+				if (prev->next)
+					prev->next->prev = token;
+				prev->next = token;
+			}
+			else
+			{
+				token->next = mini->start;
+				if (mini->start)
+					mini->start->prev = token;
+				mini->start = token;
+			}
 		}
 		token = token->next;
 	}

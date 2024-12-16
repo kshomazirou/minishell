@@ -6,13 +6,13 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:02:48 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:38:24 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/13 22:21:11 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-static char		*get_env_name(char *dest, const char *src)
+static char	*get_env_name(char *dest, const char *src)
 {
 	int		i;
 
@@ -25,7 +25,6 @@ static char		*get_env_name(char *dest, const char *src)
 	dest[i] = '\0';
 	return (dest);
 }
-//ft_strcmp ft_memdel
 
 static char	*env_value(char *env)
 {
@@ -35,7 +34,8 @@ static char	*env_value(char *env)
 	char	*env_value;
 
 	size_alloc = env_value_len(env) + 1;
-	if (!(env_value = malloc(sizeof(char) * size_alloc)))
+	env_value = malloc(sizeof(char) * size_alloc);
+	if (!env_value)
 		return (NULL);
 	i = 0;
 	while (env[i] && env[i] != '=')
@@ -70,7 +70,7 @@ static char	*get_env_value(char *arg, t_env *env)
 
 void	shell_level(t_env *env)
 {
-	int	shell_level;
+	int		shell_level;
 	char	env_name[BUFF_SIZE];
 	char	*shlvl;
 	char	*shell_level_value;

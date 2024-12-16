@@ -1,46 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   built_cmd6.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 21:38:06 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/16 20:41:26 by shoumakobay      ###   ########.fr       */
+/*   Created: 2024/12/09 21:48:43 by shoumakobay       #+#    #+#             */
+/*   Updated: 2024/12/15 20:15:34 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_int(int code)
+char	*env_to_str(t_env *lst)
 {
-	(void) code;
+	char	*env;
+	int		i;
+	int		j;
 
-	if (g_sig.pid == 0)
+	env = malloc(sizeof(char) * size_env(lst) + 1);
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (lst && lst->next != NULL)
 	{
-		write(1, "", 1);
-		g_sig.exit_status = 1;
+		if (lst->value != NULL)
+		{
+			j = 0;
+			while (lst->value[j])
+			{
+				env[i] = lst->value[j++];
+				i++;
+			}
+		}
+		if (lst->next->next != NULL)
+			env[i++] = '\n';
+		lst = lst->next;
 	}
-	else
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 130;
-	}
-	g_sig.sigint = 1;
-}
-
-void	sig_quit(int code)
-{
-	char	*nbr;
-
-	nbr = ft_itoa(code);
-	if (g_sig.pid != 0)
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 131;
-		g_sig.sigquit = 1;
-	}
-	else
-		write(1, "", 1);
-	ft_memdel(nbr);
+	env[i] = '\0';
+	return (env);
 }

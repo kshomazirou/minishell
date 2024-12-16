@@ -1,46 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   minishell_utils5.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 21:38:06 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/16 20:41:26 by shoumakobay      ###   ########.fr       */
+/*   Created: 2024/12/03 21:34:58 by shoumakobay       #+#    #+#             */
+/*   Updated: 2024/12/15 21:28:19 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_int(int code)
+void	ft_close(int fd)
 {
-	(void) code;
-
-	if (g_sig.pid == 0)
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 1;
-	}
-	else
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 130;
-	}
-	g_sig.sigint = 1;
+	if (fd > 0)
+		close(fd);
 }
 
-void	sig_quit(int code)
+void	reset_std(t_mini *mini)
 {
-	char	*nbr;
+	dup2(mini->in, STDIN);
+	dup2(mini->out, STDOUT);
+}
 
-	nbr = ft_itoa(code);
-	if (g_sig.pid != 0)
-	{
-		write(1, "", 1);
-		g_sig.exit_status = 131;
-		g_sig.sigquit = 1;
-	}
-	else
-		write(1, "", 1);
-	ft_memdel(nbr);
+void	close_fds(t_mini *mini)
+{
+	ft_close(mini->fdin);
+	ft_close(mini->fdout);
+	ft_close(mini->pipin);
+	ft_close(mini->pipout);
+}
+
+void	reset_fds(t_mini *mini)
+{
+	mini->fdin = -1;
+	mini->fdout = -1;
+	mini->pipin = -1;
+	mini->pipout = -1;
+	mini->pid = -1;
 }

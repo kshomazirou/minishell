@@ -6,13 +6,13 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:40:29 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 09:49:25 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/15 21:30:49 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ignore_sep(char *line, int i)
+int	ignore_sep(char *line, int i)
 {
 	if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == ';')
 		return (1);
@@ -21,12 +21,12 @@ int		ignore_sep(char *line, int i)
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>')
 		return (1);
 	else if (line[i] && line[i] == '\\' && line[i + 1] && line[i + 1] == '>'
-				&& line[i + 2] && line[i + 2] == '>')
+		&& line[i + 2] && line[i + 2] == '>')
 		return (1);
 	return (0);
 }
 
-int		quotes(char *line, int index)
+int	quotes(char *line, int index)
 {
 	int	i;
 	int	open;
@@ -54,7 +54,6 @@ int	quote_check(t_mini *mini, char **line)
 {
 	if (quotes(*line, INT_MAX))
 	{
-		
 		ft_memdel(*line);
 		mini->ret = 2;
 		mini->start = NULL;

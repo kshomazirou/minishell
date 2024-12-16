@@ -6,13 +6,13 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:05:39 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:34:09 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/15 21:59:05 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-int		env_value_len(const char *env)
+int	env_value_len(const char *env)
 {
 	int		i;
 	int		size_name;
@@ -33,11 +33,11 @@ int		env_value_len(const char *env)
 void	ft_skip_spacenl(const char *str, int *i)
 {
 	while ((str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n')
-	|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
 		(*i)++;
 }
 
-int			invalid_lvl(const char *str)
+int	invalid_lvl(const char *str)
 {
 	int		i;
 
@@ -51,7 +51,7 @@ int			invalid_lvl(const char *str)
 	return (0);
 }
 
-int			get_lvl(const char *str)
+int	get_lvl(const char *str)
 {
 	int	i;
 	int	sign;

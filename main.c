@@ -6,14 +6,21 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 20:28:30 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:55:45 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/15 22:10:05 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-//next_run redir and exec reset_std, close_fd, reset_fd
-//free_token
+//signal 
+//readline 
+//minishell_utils3
+// code explan 
+// abe contact!
+// tokyo plannning
+
+
+t_sig g_sig;
 
 void minishell(t_mini *mini)
 {
@@ -53,8 +60,8 @@ int main(int argc, char **argv, char **ev)
 	(void)argc;
 	(void)argv;
 
-	mini.in = dup(STDIN);
-	mini.out = dup(STDOUT);
+	// mini.in = dup(STDIN);//here is changed
+	// mini.out = dup(STDOUT);
 	mini.exit = 0;
 	mini.ret = 0;
 	mini.no_exec = 0;
@@ -63,18 +70,26 @@ int main(int argc, char **argv, char **ev)
 	mini.pipin = -1;
 	mini.pipout = -1;
 	mini.pid = -1;
-	env_init(&mini, ev);
-	shell_level(mini.env);
+	// env_init(&mini, ev);
+	// shell_level(mini.env);
+	while (1)
+	{
+		// rl_set_prompt("");
+		char *line = readline("> ");
+		if (line == NULL || ft_strcmp(line, "exit") == 0)
+			return (free(line), 0);
+		// g_sig.sigint = 0;
+		// g_sig.sigquit = 0;
+		// g_sig.pid = 0;
+		// g_sig.exit_status = 0;
+		parse(&mini, line);
+		// if (mini.start != NULL && \
+		// 	check_line(&mini, mini.start))
+			// minishell(&mini);		
+	}
 	// while (mini.exit == 0)//here is readline 
 	// {
-		g_sig.sigint = 0;
-		g_sig.sigquit = 0;
-		g_sig.pid = 0;
-		g_sig.exit_status = 0;
-		parse(&mini);
-		if (mini.start != NULL && \
-			check_line(&mini, mini.start))
-			minishell(&mini);
+
 	// 	free_token(mini.start);
 	// }
 	// free_env(mini.env);

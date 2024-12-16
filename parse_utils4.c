@@ -6,11 +6,11 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 10:12:10 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:24:26 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/15 21:55:53 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 t_token	*prev_sep(t_token *token, int skip)
 {
@@ -29,7 +29,7 @@ int	is_type(t_token *token, int type)
 		return (0);
 }
 
-int		is_types(t_token *token, char *types)
+int	is_types(t_token *token, char *types)
 {
 	if (ft_strchr(types, ' ') && is_type(token, EMPTY))
 		return (1);

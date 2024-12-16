@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:34:07 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:37:15 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/09 21:49:54 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <errno.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define EMPTY 0
 # define CMD 1
@@ -123,7 +125,7 @@ t_token	*next_token(char *line, int *i);
 int		is_type(t_token *token, int type);
 int		is_types(t_token *token, char *types);
 void	squish_args(t_mini *mini);
-void	parse(t_mini *mini);
+void	parse(t_mini *mini, char *line);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	*ft_memdel(void *ptr);
@@ -133,6 +135,33 @@ t_token	*prev_sep(t_token *token, int skip);
 char	*ft_itoa(int n);
 char	*ft_strjoin(const char *s1, const char *s2);
 int			get_lvl(const char *str);
+t_token	*next_run(t_token *token, int skip);
+int		minipipe(t_mini *mini);
+void	ft_close(int fd);
+void	reset_std(t_mini *mini);
+void	close_fds(t_mini *mini);
+void	reset_fds(t_mini *mini);
+char	*get_var_value(const char *arg, int pos, t_env *env, int ret);
+char	*expansions(char *arg, t_env *env, int ret);
+void	redir_and_exec(t_mini *mini, t_token *token);
+void	exec_cmd(t_mini *mini, t_token *token);
+int		arg_alloc_len(const char *arg, t_env *env, int ret);
+int		ft_isalnum(int c);
+int		ft_isdigit(int c);
+void	mini_exit(t_mini *mini, char **cmd);
+void	free_tab(char **tab);
+char	**ft_split(char const *s, char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		has_pipe(t_token *token);
+int		exec_builtin(char **args, t_mini *mini);
+int		is_env_char(int c);
+int		is_valid_env(const char *env);
+int		env_value_len(const char *env);
+char	*env_value(char *env);
+void	print_error(char **args);
+int		env_add(const char *value, t_env *env);
+void	print_sorted_env(t_env *env);
+char	*env_to_str(t_env *lst);
 
 
 #endif

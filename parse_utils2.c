@@ -6,13 +6,13 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:43:22 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 09:50:46 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/15 21:32:32 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-int		next_alloc(char *line, int *i)
+int	next_alloc(char *line, int *i)
 {
 	int		count;
 	int		j;
@@ -42,7 +42,7 @@ int		next_alloc(char *line, int *i)
 void	ft_skip_space(const char *str, int *i)
 {
 	while ((str[*i] == ' ' || str[*i] == '\t')
-	|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
+		|| (str[*i] == '\r' || str[*i] == '\v' || str[*i] == '\f'))
 		(*i)++;
 }
 
@@ -60,12 +60,13 @@ char	*space_alloc(char *line)
 			count++;
 		i++;
 	}
-	if (!(new = ft_calloc(i + 2 * count + 1, sizeof(char) )))
+	new = ft_calloc(i + 2 * count + 1, sizeof(char));
+	if (!new)
 		return (NULL);
 	return (new);
 }
 
-int		is_sep(char *line, int i)
+int	is_sep(char *line, int i)
 {
 	if (i > 0 && line[i - 1] == '\\' && ft_strchr("<>|;", line[i]))
 		return (0);
@@ -74,4 +75,3 @@ int		is_sep(char *line, int i)
 	else
 		return (0);
 }
-

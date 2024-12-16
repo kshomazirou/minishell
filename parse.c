@@ -6,11 +6,11 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:27:17 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/03 10:18:36 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/16 20:34:42 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	type_arg(t_token *token, int separator)
 {
@@ -61,15 +61,15 @@ t_token	*get_tokens(char *line)
 	return (next);
 }
 
-void	parse(t_mini *mini)
+void	parse(t_mini *mini, char *line)
 {
 	char	*line;
 	t_token	*token;
 
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
-	ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
-	if (get_next_line(0, &line) == -2 && (mini->exit = 1))//here is chnaged 
+	// ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
+	if (mini->exit = 1)
 		ft_putendl_fd("exit", STDERR);
 	if (g_sig.sigint == 1)
 		mini->ret = g_sig.exit_status;
