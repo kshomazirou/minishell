@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:44:25 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/15 20:56:42 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/17 21:20:11 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ int	magic_box(char *path, char **args, t_env *env, t_mini *mini)
 		waitpid(g_sig.pid, &ret, 0);
 	if (g_sig.sigint == 1 || g_sig.sigquit == 1)
 		return (g_sig.exit_status);
-	!!ret;
-	if (ret == ret == 32256 || ret == 32512)
+	if (WIFEXITED(ret))
+		ret = WEXITSTATUS(ret);
+	else
+		ret = 1;
+	if (ret == 32256 || ret == 32512)
 		ret /= 256;
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:34:07 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/09 21:49:54 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/17 21:39:55 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,29 @@ void	print_error(char **args);
 int		env_add(const char *value, t_env *env);
 void	print_sorted_env(t_env *env);
 char	*env_to_str(t_env *lst);
+int		is_in_env(t_env *env, char *args);
+int		str_env_len(char **env);
+void	free_token(t_token *start);
+int		ft_echo(char **args);
+int		ft_cd(char **args, t_env *env);
+int		ft_pwd(void);
+int		ft_export(char **args, t_env *env, t_env *secret);
+int		ft_unset(char **a, t_mini *mini);
+int		magic_box(char *path, char **args, t_env *env, t_mini *mini);
+char	*check_dir(char *bin, char *command);
+int	exec_bin(char **args, t_env *env, t_mini *mini);
+char	*get_env_value(char *arg, t_env *env);
+void	ft_putstr(char *s);
+void	ft_putendl(char *s);
+size_t	size_env(t_env *lst);
+int	ft_strisnum(const char *str);
+int	ft_atoi(const char *str);
+int		ft_env(t_env *env);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	ft_skip_spacenl(const char *str, int *i);
+int	check_line(t_mini *mini, t_token *token);
+void	free_env(t_env *env);
+
 
 
 #endif

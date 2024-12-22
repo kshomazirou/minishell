@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:27:17 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/16 20:34:42 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/18 22:02:28 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,16 @@ t_token	*get_tokens(char *line)
 		next = next->prev;
 	return (next);
 }
-
+//parse fixed 
 void	parse(t_mini *mini, char *line)
 {
-	char	*line;
+	// char	*line;
 	t_token	*token;
-
 	signal(SIGINT, &sig_int);
 	signal(SIGQUIT, &sig_quit);
+	// printf("%s\n", line);
 	// ft_putstr_fd("\033[0;36m\033[1mminishell ▸ \033[0m", STDERR);
-	if (mini->exit = 1)
+	if (mini->exit == 1)
 		ft_putendl_fd("exit", STDERR);
 	if (g_sig.sigint == 1)
 		mini->ret = g_sig.exit_status;
@@ -79,7 +79,7 @@ void	parse(t_mini *mini, char *line)
 	if (line && line[0] == '$')
 		line[0] = (char)(-line[0]);
 	mini->start = get_tokens(line);
-	ft_memdel(line);
+	// ft_memdel(line);
 	squish_args(mini);
 	token = mini->start;
 	while (token)

@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:18:18 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/12 21:49:51 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 21:44:44 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void		free_node(t_mini *mini, t_env *env)
 	ft_memdel(env);
 }
 
-int				ft_unset(char **a, t_mini *mini)
+int	ft_unset(char **a, t_mini *mini)
 {
 	t_env	*env;
 	t_env	*tmp;
@@ -64,6 +64,7 @@ int				ft_unset(char **a, t_mini *mini)
 	{
 		if (ft_strncmp(a[1], env->next->value, env_size(env->next->value)) == 0)
 		{
+			puts("mama");
 			tmp = env->next->next;
 			free_node(mini, env->next);
 			env->next = tmp;

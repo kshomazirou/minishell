@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 21:02:48 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/13 22:21:11 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/17 21:23:44 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,7 @@ static char	*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
-static char	*env_value(char *env)
-{
-	int		i;
-	int		j;
-	int		size_alloc;
-	char	*env_value;
-
-	size_alloc = env_value_len(env) + 1;
-	env_value = malloc(sizeof(char) * size_alloc);
-	if (!env_value)
-		return (NULL);
-	i = 0;
-	while (env[i] && env[i] != '=')
-		i++;
-	i += 1;
-	j = 0;
-	while (env[i])
-		env_value[j++] = env[i++];
-	env_value[j] = '\0';
-	return (env_value);
-}
-
-static char	*get_env_value(char *arg, t_env *env)
+char	*get_env_value(char *arg, t_env *env)
 {
 	char	env_name[BUFF_SIZE];
 	char	*env_val;

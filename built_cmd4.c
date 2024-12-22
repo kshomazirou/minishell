@@ -6,13 +6,13 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:14:22 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/12 21:46:16 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 20:29:36 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	print_error(int error, const char *arg)
+static int	print_error2(int error, const char *arg)
 {
 	int		i;
 
@@ -78,7 +78,7 @@ int	ft_export(char **args, t_env *env, t_env *secret)
 		if (args[1][0] == '=')
 			error_ret = -3;
 		if (error_ret <= 0)
-			return (print_error(error_ret, args[1]));
+			return (print_error2(error_ret, args[1]));
 		new_env = is_in_env(env, args[1]);
 		if (error_ret == 2)
 			new_env = 1;

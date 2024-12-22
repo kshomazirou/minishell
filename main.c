@@ -6,23 +6,22 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 20:28:30 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/15 22:10:05 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 21:52:11 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
 //signal 
-//readline 
-//minishell_utils3
+//exec cd / echo current / 
+// 
 // code explan 
-// abe contact!
 // tokyo plannning
 
 
 t_sig g_sig;
 
-void minishell(t_mini *mini)
+void minishell(t_mini *mini)//here is strange cmd is not done
 {
 	t_token	*token;
 	int		status;
@@ -30,7 +29,7 @@ void minishell(t_mini *mini)
 	token = next_run(mini->start, NOSKIP);
 	if (is_types(mini->start, "TAI"))
 		token = mini->start->next;
-	while (mini->exit != 0 && token)
+	while (mini->exit == 0 && token)
 	{
 		mini->charge = 1;//what is ?
 		mini->parent = 1;//signal
@@ -60,8 +59,6 @@ int main(int argc, char **argv, char **ev)
 	(void)argc;
 	(void)argv;
 
-	// mini.in = dup(STDIN);//here is changed
-	// mini.out = dup(STDOUT);
 	mini.exit = 0;
 	mini.ret = 0;
 	mini.no_exec = 0;
@@ -70,29 +67,29 @@ int main(int argc, char **argv, char **ev)
 	mini.pipin = -1;
 	mini.pipout = -1;
 	mini.pid = -1;
-	// env_init(&mini, ev);
-	// shell_level(mini.env);
+	env_init(&mini, ev);
+	shell_level(mini.env);
 	while (1)
 	{
-		// rl_set_prompt("");
+		rl_set_prompt("");
 		char *line = readline("> ");
 		if (line == NULL || ft_strcmp(line, "exit") == 0)
 			return (free(line), 0);
-		// g_sig.sigint = 0;
-		// g_sig.sigquit = 0;
-		// g_sig.pid = 0;
-		// g_sig.exit_status = 0;
+		g_sig.sigint = 0;
+		g_sig.sigquit = 0;
+		g_sig.pid = 0;
+		g_sig.exit_status = 0;
 		parse(&mini, line);
-		// if (mini.start != NULL && \
-		// 	check_line(&mini, mini.start))
-			// minishell(&mini);		
+		if (mini.start != NULL && \
+			check_line(&mini, mini.start))
+			minishell(&mini);
+		add_history(line);
 	}
 	// while (mini.exit == 0)//here is readline 
 	// {
-
 	// 	free_token(mini.start);
 	// }
-	// free_env(mini.env);
-	// free_env(mini.secret_env);
+	free_env(mini.env);
+	free_env(mini.secret_env);
 	return (mini.ret);
 }

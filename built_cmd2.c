@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 20:52:51 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/12 21:42:27 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 20:30:40 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	ft_cd(char **args, t_env *env)
 		cd_ret = go_to_path(1, env);
 	else
 	{
-		update_oldpwd(env);
 		cd_ret = chdir(args[1]);
 		if (cd_ret < 0)
 			cd_ret *= -1;

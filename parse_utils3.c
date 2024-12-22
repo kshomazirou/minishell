@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:57:48 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/16 20:54:50 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/19 22:07:41 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ t_token	*next_token(char *line, int *i)
 	{
 		if (c == ' ' && (line[*i] == '\'' || line[*i] == '\"'))
 			c = line[(*i)++];
-		else if (c != ' ' && line[(*i)++] == c)
+		else if (c != ' ' && line[*i] == c)//here is strange 
+		{
 			c = ' ';
+			(*i)++;
+		}
 		else if (line[*i] == '\\' && (*i)++)
 			token->str[j++] = line[(*i)++];
 		else
@@ -54,7 +57,31 @@ static int	is_last_valid_arg(t_token *token)
 	else
 		return (0);
 }
-//here is changing 
+
+void	squish_args2(t_mini *mini, t_token *token, t_token *prev)
+{
+	while (prev && is_last_valid_arg(prev) == 0)
+		prev = prev->prev;
+	if (token->prev != NULL)
+		token->prev->next = token->next;
+	if (token->next != NULL)
+		token->next->prev = token->prev;
+	token->prev = prev;
+	if (prev != NULL)
+	{
+		token->next = prev->next;
+		if (prev->next != NULL)
+			prev->next->prev = token;
+		prev->next = token;
+	}
+	else
+	{
+		token->next = mini->start;
+		if (mini->start != NULL)
+			mini->start->prev = token;
+		mini->start = token;
+	}
+}
 
 void	squish_args(t_mini *mini)
 {
@@ -66,29 +93,7 @@ void	squish_args(t_mini *mini)
 	{
 		prev = prev_sep(token, NOSKIP);
 		if (is_type(token, ARG) && is_types(prev, "TAI"))
-		{
-			while (is_last_valid_arg(prev) == 0)
-				prev = prev->prev;
-			if (token->prev)
-				token->prev->next = token->next;
-			if (token->next)
-				token->next->prev = token->prev;
-			token->prev = prev;
-			if (prev)
-			{
-				token->next = prev->next;
-				if (prev->next)
-					prev->next->prev = token;
-				prev->next = token;
-			}
-			else
-			{
-				token->next = mini->start;
-				if (mini->start)
-					mini->start->prev = token;
-				mini->start = token;
-			}
-		}
+			squish_args2(mini, token, prev);
 		token = token->next;
 	}
 }

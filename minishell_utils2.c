@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:19:25 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/15 21:27:13 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 20:30:45 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	exec_cmd(t_mini *mini, t_token *token)
 	char	**cmd;
 	int		i;
 
+	puts("exec_cmd");
 	if (mini->charge == 0)
 		return ;
 	cmd = cmd_tab(token);

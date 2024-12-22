@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:10:35 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/15 21:01:02 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/19 22:07:37 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ void	redir(t_mini *mini, t_token *token, int type)
 		return ;
 	}
 	dup2(mini->fdout, STDOUT);
+}
+
+t_token	*next_sep(t_token *token, int skip)
+{
+	if (token && skip)
+		token = token->next;
+	while (token && token->type < TRUNC)
+		token = token->next;
+	return (token);
 }
 
 void	input(t_mini *mini, t_token *token)
@@ -69,15 +78,6 @@ void	redir_and_exec(t_mini *mini, t_token *token)
 	if ((is_type(prev, END) || is_type(prev, PIPE) || !prev)
 		&& pipe != 1 && mini->no_exec == 0)
 		exec_cmd(mini, token);
-}
-
-t_token	*next_sep(t_token *token, int skip)
-{
-	if (token && skip)
-		token = token->next;
-	while (token && token->type < TRUNC)
-		token = token->next;
-	return (token);
 }
 
 t_token	*next_run(t_token *token, int skip)
