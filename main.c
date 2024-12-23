@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 20:28:30 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/22 21:52:11 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 22:07:33 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,15 @@ int main(int argc, char **argv, char **ev)
 			check_line(&mini, mini.start))
 			minishell(&mini);
 		add_history(line);
+		free_token(mini.start);
 	}
-	// while (mini.exit == 0)//here is readline 
-	// {
-	// 	free_token(mini.start);
-	// }
 	free_env(mini.env);
 	free_env(mini.secret_env);
 	return (mini.ret);
 }
+
+//1. unset variable 
+//2. norminette 
+//3. pippe checking 
+//4. ctrl + C
+//5. history 

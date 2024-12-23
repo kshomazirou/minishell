@@ -6,7 +6,7 @@
 /*   By: shoumakobayashi <shoumakobayashi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:25:06 by shoumakobay       #+#    #+#             */
-/*   Updated: 2024/12/09 21:36:19 by shoumakobay      ###   ########.fr       */
+/*   Updated: 2024/12/22 22:15:16 by shoumakobay      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ int				ft_echo(char **args)
 		write(1, "\n", 1);
 	return (SUCCESS);
 }
-
